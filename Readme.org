@@ -1,0 +1,9 @@
+#+title: Computer Systems: A Programmer's Perspective Work
+#+author: Ulysses Carlos
+#+date: <2021-01-11 Mon>
+
+This repository contains all practice and homework problems that I have worked and solved while reading Randall Byrant's Computer Systems: A Programmer's Perspective.
+** Second Edition
++ Contains Practice Problems for Chapter 2 (Integer and Floating Point Representation) and Chapter 3 (x86 Assembly)
+** Third Edition
++ Contains Chapter 3 (x86-64 Assembly)
