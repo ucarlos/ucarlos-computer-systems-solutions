@@ -1,0 +1,22 @@
+--------------------------------------------------------------------------------
+Consider the following three calls to show_bytes:
+
+int a = 0x12345678;
+
+byte_pointer ap = (byte_pointer) &a;
+show_bytes(ap, 1); /* A. */
+show_bytes(ap, 2); /* B. */
+show_bytes(ap, 3); /* C. */
+
+Indicate the values that will be printed by each call on a little-endian machine
+and on a big-endian machine:
+
+a) Little Endian : 78,		Big Endian : 12
+b) Little Endian : 7856 	Big Endian : 1234
+c) Little Endian : 785634	Big Endian : 123456
+
+
+
+
+
+--------------------------------------------------------------------------------

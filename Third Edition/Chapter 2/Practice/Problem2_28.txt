@@ -1,0 +1,27 @@
+-----------------------------------------------------------------------------------------
+We can represent a bit pattern of length w = 4 with a single hex digit. For an unsigned
+interpretation of these digits, use Equation 2.12 to fill in the following table given
+the values and the bit representations (in hex) of the unsigned additive inverses of the
+digits shown below.
+
+Equation 2.12 is shown below:
+	 For any number x such that 0 <= x < 2^w, its w-bit unsigned negation -u_w x
+	 is given by the following:
+	    	  -u_w x = {x, if x = 0 : 2^w - x, if x > 0 }
+		  
+-----------------------------------------------------------------------------------------
+x						-u_4 x
+-----------------------------------------------------------------------------------------
+Hex	Decimal				Decimal		Hex
+-----------------------------------------------------------------------------------------
+1	1				2^4 - 1 = 15	F 	
+4	4				2^4 - 4 = 12	C
+7	7				2^4 - 7 = 9	9
+a	10				2^4 - 10 = 6	6
+e	14				2^4 - 14 = 2	2
+-----------------------------------------------------------------------------------------
+
+
+This problem is a simple demonstration of arithmetic modulo 16. The easiest way to solve
+it is to convert the hex pattern into its unsigned decimal value. For nonzero values
+of x, we must have (-u_w x) + x = 16. Then we convert the complemented value back to hex.

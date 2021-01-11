@@ -1,0 +1,34 @@
+-----------------------------------------------------------------------------------------
+Suppose we truncate a 4-bit value (represented by hex digits 0 through F) to a 3-bit
+value(represented as hex digits 0 through 7.) Fill in the table below showing the effect
+of this truncation for some cases, in terms of the unsigned and two's complement
+interpretations of those bit patterns.
+
+-----------------------------------------------------------------------------------------
+We have 000, 001, 010, 011, 100, 101, 110, and 111 to describe 0-7, and in two's
+complement, that is 000: 0, 001: 1, 010: 2, 011: 3, 100: -4, 101: -3, 110: -2,
+111: -1
+
+Hex				Unsigned		Two's complement
+-----------------------------------------------------------------------------------------
+Original   Truncated		Orig.   Trun.		Orig.    Trun.
+1	   1			1	1		1	 1
+3	   3			3	3		3	 3
+5	   5			5	5		5	 5
+c	   4			12	4		-4	 4	 
+e	   6			14	6		-2	 6
+
+-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+The effect of truncation is fairly intuitive for unsigned numbers, but not for two’s-
+complement numbers. This exercise lets you explore its properties using very small
+word sizes.
+
+As Equation 2.9 states, the effect of this truncation on unsigned values is to
+simply find their residue, modulo 8. The effect of the truncation on signed values
+is a bit more complex. According to Equation 2.10, we first compute the modulo 8
+residue of the argument. This will give values 0 through 7 for arguments 0 through
+7, and also for arguments −8 through −1. Then we apply function U2T 3 to these
+residues, giving two repetitions of the sequences 0 through 3 and −4 through −1.
+
+-----------------------------------------------------------------------------------------

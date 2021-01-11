@@ -1,0 +1,28 @@
+----------------------------------------------------------------------------------------------
+
+Assuming w = 4, we can assign a numeric value to each possible hexadecimal
+digit, assuming either an unsigned or a two’s-complement interpretation. Fill in
+the following table according to these interpretations by writing out the nonzero
+powers of 2 in the summations shown in Equations 2.1 and 2.3:
+
+----------------------------------------------------------------------------------------------
+Hexadecimal     Binary          B2U_4                        B2T_4
+----------------------------------------------------------------------------------------------
+0xa             1010            2^3 + 2^1 = 10               -2^3 + 2^1 = -8 + 2 = -6
+0x1             0001            2^0 = 1                      2^0 = 1
+0xb             1011            2^3 + 2^1 + 2^0 = 11         -2^3 + 2^1 + 2^0 = -5
+0x2             0010            2^1 = 2                      2^1 = 2
+0x7             0111            2^2 + 2^1 + 2^0 = 7          2^2 + 2^1 + 2^0 = 7
+0xc             1100            2^3 + 2^2 = 12               -2^3 + 2^2 = -4
+
+
+----------------------------------------------------------------------------------------------
+
+In general, working through examples for very small word sizes is a very good way
+to understand computer arithmetic.
+The unsigned values correspond to those in Figure 2.2. For the two’s-
+complement values, hex digits 0 through 7 have a most significant bit of 0, yielding
+nonnegative values, while hex digits 8 through F have a most significant bit of 1,
+yielding a negative value.
+
+----------------------------------------------------------------------------------------------

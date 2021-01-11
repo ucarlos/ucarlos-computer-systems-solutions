@@ -1,0 +1,32 @@
+-----------------------------------------------------------------------------------------
+In the following code, we have omitted the definitions of constants M and N:
+
+#define M     // Mystery Number 1
+#define N    // Mystery Number 2
+int arith(int x, int y){
+    int result = 0;
+    result = 0;
+    result = x * M + y / N; // M and N are mystery numbers
+    return result;
+}
+
+We compiled this code for particular values of M and N. The compiler optimized the
+multiplication and division using the methods we have discussed. The following is a
+translation of the generated machine code back into C:
+
+// Translated of assembly code for arith
+int optarith(int x, int y){
+1    int t = x;
+2    x << 5;
+3    x -= x;
+4    if (y < 0)
+5       y += 7;
+6    y >> 3; // Arithmetic shift
+7    return x + y;
+}
+
+At step 3, x := x * 2^5 - t --> x := 32 * x - x = 31?
+
+At step 4, if y < 0, then seven is added in order to divide by 8.
+
+-----------------------------------------------------------------------------------------

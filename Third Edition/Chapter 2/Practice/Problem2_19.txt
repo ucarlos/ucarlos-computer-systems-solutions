@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------------------
+Using the table you filled in when solving Problem 2.17, fill in the following table
+describing the function T2U 4 : (4 Bits)
+---------------------------------------------------------------------------------------
+ x       T2U_4(x)
+-1       1111 --> 1111(U_4) = 15
+-5       1011 --> 1011(U_4) = 11
+-6       1010 --> 1010(U_4) = 10(or 0xA)
+-4       1100 --> 1100(U_4) = 12(or 0xC)
+ 1       0001 --> 0001(U_4) = 1
+ 8       1000 --> 1000(U_4) = 8
+
+
+
+---------------------------------------------------------------------------------------
+
+The functions T2U and U2T are very peculiar from a mathematical perspective.
+It is important to understand how they behave.
+We solve this problem by reordering the rows in the solution of Problem 2.17
+according to the two’s-complement value and then listing the unsigned value as
+the result of the function application.
+
+---------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+

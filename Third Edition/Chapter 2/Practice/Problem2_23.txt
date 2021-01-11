@@ -1,0 +1,26 @@
+-----------------------------------------------------------------------------------------
+Consider the following C functions:
+
+int fun1(unsigned int word){
+    return (int) ((word << 24) >> 24);
+}
+
+int fun2(unsigned int word){
+    return ((int) word << 24) >> 24;
+}
+
+Assume these are executed as a 32-bit program on a machine that uses two's complement
+arithmetic. Assume also that right shifts of signed values are preformed arithmetically,
+while right shifts of unsigned values are performed logically.
+
+A) Fill in the following table showing the effect of these functions for several example
+arugments. You will find it more convenitent to work with a hexadceimal representation.
+Just rememeber that hex digits 8 through F have their most significant bits equal to 1.
+
+-----------------------------------------------------------------------------------------
+w    	       	    fun1(w)	       fun2(w)
+---------------------------------------------------
+0x0000_0076	0x0000 0076	       0x0000 0076
+0x8765_4321	0x00000021	       0x00000021
+0x0000_00c9	0x000000c9	       0xffffffc9
+0xedcb_a987	0x00000087	       0xffffff87

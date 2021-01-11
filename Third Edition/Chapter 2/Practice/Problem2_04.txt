@@ -1,0 +1,30 @@
+--------------------------------------------------------------------------------
+Without converting the numbers to decimal or binary, try to solve the following
+arithmetic problems, giving the answers in hexadecimal. Hint: Just modify the
+methods you use for preforming decimal addition and subtraction to use base 16.
+
+a) 0x605c
+   +   05
+---------
+   0x6061
+
+
+b) 0x605c
+   -   20
+---------
+   0x603c
+   
+
+c) 0x605c
+   +   20
+---------
+   0x607c
+
+     
+d) 0x60fa
+  -0x605c
+---------
+   0x009e
+
+
+--------------------------------------------------------------------------------

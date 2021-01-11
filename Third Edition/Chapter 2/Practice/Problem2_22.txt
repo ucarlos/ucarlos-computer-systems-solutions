@@ -1,0 +1,14 @@
+------------------------------------------------------------------------------------------------------
+Show that each of the following bit vectors is a two’s-complement representation
+of −4 by applying Equation 2.3:
+A. [1100]
+B. [11100]
+C. [111100]
+
+Observe that the second and third bit vectors can be derived from the first by sign
+extension.
+
+A) --> ~1100 --> 0011 + 1 --> 0100 = 4
+B) --> ~11100 --> 00011 + 1 --> 00100 = 4
+C) --> ~111100 --> 000011 + 1 --> 0000100 = 4
+------------------------------------------------------------------------------------------------------

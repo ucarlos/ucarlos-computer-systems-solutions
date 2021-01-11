@@ -1,0 +1,16 @@
+-----------------------------------------------------------------------------------------
+For each of the following lines of assembly language, determine the appropriate
+instruction suffic based on the operands (For example, mov can be rewritten as
+	    movb, movw, movl, or movq.)
+	    
+-----------------------------------------------------------------------------------------
+movl	%eax, (%rsp)
+movw	(%rax), %dx
+movb	$0xFF, %bl
+movb	(%rsp, %rdx, 4), %dl
+movq	(%rdx), %rax
+movswq	%dx, (%rax)
+-----------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------

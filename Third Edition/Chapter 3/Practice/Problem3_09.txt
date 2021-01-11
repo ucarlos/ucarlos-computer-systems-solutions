@@ -1,0 +1,32 @@
+-----------------------------------------------------------------------------------------
+Suppose we want to generate assembly code for the following C function:
+
+long shift_left4_right_n(long x, long n){
+     x <<= 4;
+     x >>= n;
+     return x;
+}
+
+The code that follows is a portion of the assembly code that performs the actual shifts
+and leaves the final value in register %rax. Two key instructions have been omitted.
+Parameters x and n are stored in registers %rdi and %rsi, respectively.
+
+// long shift_left4_right_n(long x, long n)
+// x in %rdi, n in %rsi
+
+shift_left_4_rightn:
+	movq	%rdi, %rax
+			  -- x <<= 4
+	movl	%rsi, %ecx
+			  -- x >>= n
+
+Fill in the missing information, following the annotations on the right. The right
+shift should be preformed arithmetically.
+
+
+-----------------------------------------------------------------------------------------
+Solution:
+Line 1:		salq 4, %rax
+Line 2: 	sarq %ecx, %rax
+
+-----------------------------------------------------------------------------------------

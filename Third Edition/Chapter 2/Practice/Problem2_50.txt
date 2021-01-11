@@ -1,0 +1,54 @@
+-----------------------------------------------------------------------------------------
+Show how the following binary fractional values would be rounded to the nearest half
+(1 bit to the right of the binary point), according to the round-to-even rule. In each
+case, show the numeric values, both before and after rounding.
+
+-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+
+In case you forget how Binary rounding works, here's an excerpt from the textbook:
+
+We consider least significant bit value 0 to be even and 1 to be odd. In general, the
+rounding mode is only significant when we have a bit pattern of the form
+	 XX ... X.YY ... Y100
+Where X and Y denote arbitrary bit values with the rightmost Y being the position to
+which we wish to round. Only bit patterns of this form denote values that are halfway
+between two possible results. As examples, consider the problem of rounding values to
+the nearest quarter(i.e. 2 bits to the right of the binary point.) We would round
+10.00011_2 [2 3/32]  down to 10.00_2 [2] and 10.001110_2 [2 3/16] up to 10.01 [2 1/4],
+because the values are not halfway between two possible values. We would round
+10.11100_2 (2 7/8) up to 11.00_2(3) and 10.10100_2 (2 5/8) down to 10.10_2 (2 1/2), since
+these values are halfway between two possible results, and we prefer to have the least
+significant bit equal to zero.
+
+-----------------------------------------------------------------------------------------
+
+A) 10.111_2
+Before Rounding: 10.111 (2 + 1/2 + 1/4 + 1/8) = 2 7/8
+After rounding: 11.000 (3)  = 3
+
+B) 11.010_2
+Before Rounding: 11.010(3 + 1/4) = 3 1/4
+After Rounding: 11.000 (3) = 3
+
+C) 11.000_2
+Before Rounding: 11.000_2 (3)
+After Rounding: 11.00_2 (3)
+
+D) 10.110_2
+Before Rounding: 10.1100_2 (2 3/4)
+After Rounding: 11.000_2 (3)
+
+
+-----------------------------------------------------------------------------------------
+					Solution
+Preforming rounding by hands helps reinforce the idea of round-to-even with binary
+numbers.
+
+Original		Rounded
+-----------------------------------------------------------------------------------------
+10.111_2 [2 7/8]	11.0 [3]
+11.010_2 [3 1/4]	11.0 [3]
+11.000_2 [3]		11.0 [3]
+10.110_2 [2 3/4]	11.0 [3]
+-----------------------------------------------------------------------------------------

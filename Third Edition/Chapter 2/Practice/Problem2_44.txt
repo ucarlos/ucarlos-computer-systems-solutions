@@ -1,0 +1,53 @@
+-----------------------------------------------------------------------------------------
+Assume data type int is 32 bits long and uses a two's-complement representation for
+signed values. Right shifts are performed arithmetically for signed values and logically
+for unsigned values. The variables are declared and initalized as follows:
+
+int x = foo(); // Arbitrary value
+int y = bar(); // Arbitrary value
+
+unsigned ux = x;
+unsigned uy = y;
+
+For each of the following C expressions, either (1) argue that it is true(evalutes to 1)
+for all values of x and y, or (2) gives values of x and y for which it is false
+(evaluates to 0):
+
+A) (x > 0) || (x - 1 < 0)
+False for T_min.
+
+B) (x & 7) != 7 || (x << 29) < 0)
+When x equals 7, the first part is false, and so to evaluate the right hand side, you do
+the following:
+    7 << 29
+    7 * 2^29
+    4 * 2^29 + 3 * 2^29
+    2^2 * 2^29 + 2 * 2^29 + 2^29
+    2^31 + 2^30 + 2^29
+    Since 2^31 > 2^31 - 1 (Max int32 value), Positive overflow occurs, so this causes
+    2^31 + 2^30 + 2^29 - 2^32
+    which can be broken down into
+    2^31 + 2^30 + 2^29 - 2 * 2^31
+    2^30 + 2^29 - 2^31
+    Since -2^31 is the smallest int32 value, the result will always remain negative.
+This then is true.
+C) (x * x) >= 0
+False. When x is 65,535 (0xFFFF), x*x is −131,071 (0xFFFE0001).
+D) (x < 0) || (-x <= 0)
+True. If x is nonnegative, then -x is nonpositive.
+E) (x > 0) || (-x >= 0)
+False. Let x be −2,147,483,648 (TMin 32 ). Then both x and -x are negative.
+F) (x + y) == (uy + ux)
+True. Two’s-complement and unsigned addition have the same bit-level be-
+havior, and they are commutative.
+G) (x * ~y) + (uy * ux) == -x
+True. ~y equals -y-1. uy*ux equals x*y. Thus, the left-hand side is equivalent
+to x*-y-x+x*y.
+
+-----------------------------------------------------------------------------------------
+0111
+0111
+---
+7 * 2^29
+4 * 2^29 + 3 *2^29
+2^2 * 

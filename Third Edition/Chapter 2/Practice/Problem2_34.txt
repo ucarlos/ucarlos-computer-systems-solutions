@@ -1,0 +1,14 @@
+-----------------------------------------------------------------------------------------
+6.39
+
+Assume for float number only:
+
+Sign bit : 1
+Exponent : 8
+Fractional Part: 23
+
+Given a floating number, get bit representation:
+Sign = (int)float_num & 0x80000000
+Exponent=(int)float_num & 0x7F800000
+Fractional= (int)(float) & 007FFFFF
+
