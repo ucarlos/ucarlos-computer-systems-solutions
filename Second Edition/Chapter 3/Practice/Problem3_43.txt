@@ -1,0 +1,81 @@
+Figure 3.32 (above) shows a (low-quality) implementation of a function that 
+reads a line from standard input, copies the string to newly allocated storage, 
+and returns a pointer to the result.
+Consider the following scenario. Procedure getline is called with the return
+address equal to 0x8048643, register %ebp equal to 0xbffffc94, register %ebx
+equal to 0x1, register %edi is equal to 0x2, and register %esi is equal to 0x3. 
+You type in the string “ 01 23 45 67 89 01 23 45 67 89 01 23”.
+The program terminates with a segmentation fault. You run gdb and determine
+that the error occurs during the execution of the ret instruction of
+getline a segmentation fault. You run gdb and determine that the error
+occurs during the execution of the ret instruction of getline.
+
+
+----------------------------------------------------------------------------------------
+(a) C code
+1 /* This is very low-quality code.
+2 It is intended to illustrate bad programming practices.
+3 See Problem 3.43. */
+4 char *getline()
+5 {
+6	char buf[8];
+7 	char *result;
+8 	gets(buf);
+9 	result = malloc(strlen(buf));
+10 	strcpy(result, buf);
+11 	return result;
+12 }
+
+(b) Disassembly up through call to gets
+1   080485c0 	   	   	  <getline>:
+2    80485c0: 55	  	  push %ebp
+3    80485c1: 89 e5 	   	  mov %esp,%ebp
+4    80485c3: 83 ec 28 	   	  sub $0x28,%esp
+5    80485c6: 89 5d f4 	  	  mov %ebx,-0xc(%ebp)
+6    80485c9: 89 75 f8 	  	  mov %esi,-0x8(%ebp)
+7    80485cc: 89 7d fc 	   	  mov %edi,-0x4(%ebp)
+-- Diagram stack at this point
+8    80485cf: 8d 75 ec lea -0x14(%ebp),%esi
+9    80485d2: 89 34 24 mov %esi,(%esp)
+10   80485d5: e8 a3 ff ff ff call 804857d <gets>
+--------------------------------------------------------------------------------
+A) Fill in the diagram that follows, indicating as much as you can about the
+stack just after executing the instruction at line 7 in the disassembly.
+Label the quantities stored on the stack (e.g., “Return address”) on the
+right, and their hexadecimal values (if known) within the box. Each box 
+represents 4 bytes. Indicate the position of %ebp.
+   	     	     | 08 04 86 43 | Return Address
+		         | bf ff fc 94 | %ebp
+                 | 00 00 00 02 | %edi
+		         | 00 00 00 03 | %esi
+		         | 00 00 00 01 | %ebx
+		         | buf [4 - 7] |
+		         | buf [0 - 3] |
+		         |             | 
+		      
+
+	
+B) Modify your diagram to show the effect of the call to gets (line 10).
+                 | 08 04 86 00 | <-- Null character Overrides 
+                 |  3  2  1  0 | %ebp
+                 |  9  8  7  6 | %edi
+                 |  5  4  3  2 | %esi
+                 |  1  0  9  8 | %ebx
+                 |  7  6  5  4 | buf [4 - 7]        
+                 |  3  2  1  0 | buf [0 - 3]
+                 |             |
+
+C) To what address does the program attempt to return?
+   The programs tries to return to %ebp, but the last character has been overwritten by the null character
+
+D) What register(s) have corrupted value(s) when getline returns?
+   %ebp, %edi, %esi, %ebx
+
+E) Besides the potential for buffer overflow, what two other things are wrong
+with the code for getline?	
+
+    A) A input line should be vary, and not have a cap of 7 characters
+    B) Malloc allocates the string length of buf, so it can only copy n - 1
+       characters to result. Should buf approach the char limit, result will
+       be copy 0 - (n - 1) bytes, and will lack a null character to end the
+       string. 

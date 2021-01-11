@@ -1,0 +1,19 @@
+Show how the following binary fractional values would be rounded to the nearest
+half (1 bit to the right of the binary point), according to the round-to-even
+rule. In each case, show the numeric values, both before and after rounding.
+
+a) 10.010 (Binary)
+   Before Rounding: 10.010(Binary) == 2.25 (Decimal)
+   After Rounding: 10.000(Binary) == 2.0 (Decimal)
+
+b) 10.011 (Binary)
+   Before Rounding: 10.011 (Binary) == 2.375 (Decimal)
+   After Rounding: 10.100 (Binary) == 2.5 (Decimal)
+
+c) 10.110 (Binary)
+   Before Rounding: 10.110 (Binary) == 2.75 (Decimal)
+   After Rounding:  11.000 (Binary) == 3(Decimal)
+
+d) 11.001 (Binary)
+   Before Rounding: 11.001 (Binary) = 3.125 (Decimal)
+   After Rounding: 11.0(Binary) == 3(Decimal)

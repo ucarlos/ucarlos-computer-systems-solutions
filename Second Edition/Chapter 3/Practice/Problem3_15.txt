@@ -1,0 +1,78 @@
+In the following excerpts from a dissembled binary, some of the
+information has been replaced by Xs. Answer the following about
+these instructions.
+
+_________________
+Read this First |
+-----------------------------------------------------------------------
+There are several different encoding for jumps, but some of the
+most commonly used are PC relative. That is, they encode the
+difference of between the address of the target instruction and
+the address of the instruction immediately following the jump.
+-----------------------------------------------------------------------
+
+-----------------------------------------------------------------------
+Your only mistake is that you performed arithmetic using the
+jump statement instead of the instruction after the jump
+statement.
+-----------------------------------------------------------------------
+
+
+A) What is the target of the je instruction below? (You don't
+   need to know anything about the call instruction here.)
+
+   804828f:     74 05              je   XXXXXXX
+   8048291:     e8 1e 00 00 00     call 80482b4
+
+   The target is 804828f + 5, which is 8048294.
+-----------------------------------------------------------------------
+The je instruction has as target 0x8048291 + 0x05. As the
+original disassembled code shows, this is 0x8048296.
+-----------------------------------------------------------------------
+
+B) What is the target of the jb instruction below?
+
+   8048357:    72 e7                  jb XXXXXXX
+   8048359:    c6 05 10 a0 04 08 01   movb $0x1, 0x804a010
+
+   The target is 8048357 + e7 == 804836e.
+-----------------------------------------------------------------------
+The jb instruction has as target 0x8048359 - 25 (since 0xe7 is
+the 1-byte two's complement representation of -25). As the
+original disassembled code shows, this is 0x8048340.
+-----------------------------------------------------------------------
+
+C) What is the address of the mov instruction?
+   XXXXXXX:    74 12                 je 8048391
+   XXXXXXX:    b8 00 00 00 00        mov $0x0, %eax
+
+   Statement 1 is jumping to 8048391, so its address is
+   8048391 - 12 -->  804837f. The address hidden
+   in Statement 2 has to 8048381. since there is a difference
+   of two bytes between both statements.
+
+D) In the code that follows, the jump target is encoded in
+   PC-relative form asa 4-byte, two's-complement number.
+   The bytes are listed from least significant to most,
+   reflecting the little-endian byte ordering of IA32. What
+   is the address of the jump target?
+
+   80482bf:       e9 e0 ff ff ff        jmp     XXXXXXX
+   80482c4:       90                    nop
+
+   The address of statement 1 is 08 04 82 bf, so the address of
+   the jump target is 080482bf + ffffffe0 = 0804929f.
+-----------------------------------------------------------------------
+Reading the bytes in revere order, we see that the target offset
+is 0xffffffe0, or decimal - 32. Adding this to 0x80482c4 (the
+address of the nop instruction) gives address 0x80482a4.
+-----------------------------------------------------------------------
+
+E) Explain the relation between the annotation on the right
+   and the byte coding on the left.
+
+   80482aa:     ff 25 fc 9f 04 08   jmp *0x8049ffc
+
+   The jump address is displayed in reverse order(Little endian)
+   so fc 9f 04 08 is equal to 08 04 9f fc.
+________________________________________________________________

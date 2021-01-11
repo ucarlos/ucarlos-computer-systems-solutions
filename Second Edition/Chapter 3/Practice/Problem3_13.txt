@@ -1,0 +1,42 @@
+The following C code
+
+int comp(data_t a, data_t b){
+    return a COMP b;
+}
+
+shows a general comparison between arguments a and b, where we
+can set the data type of the arguments by declaring data_t with
+a typedef declaration, and we can set the comparison by defining
+COMP with a #define declaration.
+
+Suppose a is in %edx and b is in %eax. For each of the following
+instruction sequences, determine  which data types data_t and
+which comparisons COMP could cause the compiler to generate this
+code. (There can be multiple correct answers; you should list
+them all.)
+
+A. cmpl		%eax, %edx
+   setl		%al
+-----------------------------------------------------------------------------------------
+I think that the data type would be a 32-bit data type that is definitely
+twos-complement, so either an int or long int.
+-----------------------------------------------------------------------------------------
+B. cmpw		%ax, %dx
+   setge	%al
+-----------------------------------------------------------------------------------------
+We are comparing regular words and comparing whether a is greater or equal to b.
+This set compares twos-complement numbers, so data_t should be a short int
+-----------------------------------------------------------------------------------------
+
+C. cmpb		%al, %dl
+   setb		%al
+-----------------------------------------------------------------------------------------
+We are comparing bytes stored in %al and %dl for whether a is below b. The data type would have to be an unsigned char.
+-----------------------------------------------------------------------------------------
+D. cmpl		%eax, %edx
+   setne	%al
+-----------------------------------------------------------------------------------------
+Long words are being compared for inequality, so the data_type would have to be a
+2-complement number that is 32-bit. This leaves int, and long int to be the only
+types.
+-----------------------------------------------------------------------------------------

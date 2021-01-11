@@ -1,0 +1,39 @@
+The following code computes the product of x and y and stores the result in
+memory. Data type ll_t is defined to be equivalent to long long.
+typedef long long ll_t;
+
+void store_prod(ll_t *dest, int x, ll_t y) {
+     *dest = x*y;
+}
+
+gcc generates the following assembly code implementing the computation:
+
+dest at %ebp+8, x at %ebp+12, y at %ebp+16
+
+1    movl 16(%ebp), %esi    -- %esi = y
+2    movl 12(%ebp), %eax    -- %eax = x
+3    movl %eax, %edx 	    -- %edx = x
+4    sarl $31, %edx  	    -- %edx = x >> 31
+5    movl 20(%ebp), %ecx    -- %ecx = upper 4 bytes of y 
+6    imull %eax, %ecx	    -- %ecx = %ecx * %eax
+7    movl %edx, %ebx        -- %ebx = x >> 31
+8    imull %esi, %ebx       -- %ebx = (x >> 31) * y
+9    addl %ebx, %ecx        -- %ecx = %ecx + %ebx
+10   mull %esi		    -- %eax = %esi --> stored in %edx and %eax
+11   leal (%ecx,%edx), %edx -- %edx = %ecx + %edx
+12   movl 8(%ebp), %ecx	    -- %ecx = dest
+13   movl %eax, (%ecx)	    -- least sig. four bytes of (%ecx) = %eax
+14   movl %edx, 4(%ecx)	    -- most sig. four bytes if (%ecx) = %edx
+
+This code uses three multiplications to implement the multiprecision arithmetic
+required to implement 64-bit arithmetic on a 32-bit machine.
+Describe the algorithm used to compute the product, and annotate the assembly
+code to show how it realizes your algorithm.
+
+Hint: See Problem 3.12 and its solution.
+
+x is left shifted by 31 and then multiplied by the first half of y
+(4 most sig. bytes), and then the lower half of y is multipled by x >> 31. This
+is then added to the first half of y. An unsigned multiplication is then formed
+by multiplying the lower half of y with the contents of %eax. The lower half
+of y is stored in %eax, and the upper half in %edx.

@@ -1,0 +1,33 @@
+The following C function converts an argument of type src_t to a return value of
+type dst_t, where these two types are defined using typedef:
+
+dest_t cvt(src_t x){
+       dest_t y = (dest_t) x;
+       return y;
+}
+
+Assume argument x is int the appropriately named portion of register %rdi
+(i.e., %rdi, %edi, %di, or %dil), and that some form of data movement instruction
+is to be used to preform the type conversion and to copy the value to the
+appropriately named portion of register %rax. Fill in the following table
+indicating the instruction, the source register, and the destination register for
+the following  combinations of source and destination type:
+
+src_t	       dest_t	       Instruction	     S		 D
+-----------------------------------------------------------------------------------------
+long		long		movq		   %rdi		%rax	
+
+int		long		movslq		   %edi		%rax
+
+char		long		movsbq		   %dil		%rax
+
+unsigned int	unsigned long	movl		   %edi		%rax
+
+unsigned char	unsigned long	movzbq		   %dil		%rax
+	 
+long		int		movl		   %rdi		%eax
+
+unsigned long	unsigned	movl		   %rdi		%eax
+
+
+-----------------------------------------------------------------------------------------

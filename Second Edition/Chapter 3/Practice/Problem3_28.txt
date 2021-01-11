@@ -1,0 +1,46 @@
+In the C function that follows, we have omitted the body of the
+switch statement. In the C code, the case labels did not span
+a contiguous range, and some cases had multiple labels.
+
+int switch2(int x){
+    int result = 0;
+    switch(x){
+        /* Body of switch statement omitted */
+    }
+    return result;
+}
+
+In compiling the function, GCC generates the assembly code that
+follows for the initial part of the procedure and for the jump
+table. Variable x is initially at offset 8 relative to register
+%ebp.
+
+  // x at %ebp + 8
+  movl    8(%ebp), %eax
+  // Set up jump table access
+  addl   $2, %eax
+  cmpl   $6, %eax
+  ja     .L2
+  jmp    *.L8(, %eax, 4)
+
+
+// Jump table for switch2
+.L8:
+    .long   .L3 -- 0
+    .long   .L2 -- 1
+    .long   .L4 -- 2
+    .long   .L5 -- 3
+    .long   .L6 -- 4
+    .long   .L6 -- 5
+    .long   .L7 -- 6
+
+Based on this information, answer the following questions:
+A. What were the values of the case labels in the switch
+   statement body?
+   See above
+
+
+B. What cases had multiple labels in the C code?
+Cases 4 and 5.
+
+

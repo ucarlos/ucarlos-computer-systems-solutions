@@ -1,0 +1,28 @@
+We can represent a bit pattern of length w = 4, with a single hex digit. For an unsigned
+interpretation of these digits, use Equation 2.12 to fill in the following table given
+the values and the bit representations (in hex) of the unsigned additive inverses of the
+digits shown.
+
+Equation 2.12 is shown below:
+---------------------------------------------------------------------------------------------------
+For any number x such that 0 <= x < 2^w, its w-bit unsigned negation is given by the
+following:
+	(Neg_Unsigned) x = x, if (x == 0)
+		       	 = 2^w - x, if (x > 0)
+
+----------------------------------------------------
+	x			(Neg_Unsigned) x
+----------------------------------------------------
+Hex	Decimal			Decimal		Hex
+----------------------------------------------------
+0	0			0		0	
+5	5			2^4 - 5 = 11	B
+8	8			2^4 - 8 = 8	8
+D	13			2^4 - 13 = 3	3
+F	15			2^4 - 15 = 1	1
+----------------------------------------------------
+
+
+
+
+___________________________________________________________________________________________________

@@ -1,0 +1,24 @@
+A C function incrprob has arguments q, t, and x of different sizes, and each may
+be signed or unsigned. The function has the following body:
+
+   *t += x;
+   *q += *t;
+
+It compiles to the following x86-64 code:
+1  incrprob:
+2	addl   (%rdx), %edi  -- %edi += *rdx -- x is unsigned/signed int, 1st arg
+3  	movl   %edi, (%rdx) --  *rdx = %edi  -- t = 3rd arg, long
+4  	movslq %edi,%rdi    --  %rdi = %edi  
+5  	addq   %rdi, (%rsi) -- *rsi = *rsi + %rdi -- usign/sign long, 2nd arg 
+6  	ret
+
+rdi, rsi, rdx, rcx, r8, r9
+
+
+Determine all four valid function prototypes for incrprob by determining the
+ordering and possible types of the three parameters
+
+void incprob(int x, long *q, long *t);
+void incprob(int x, unsigned long *q, unsigned long *t);
+void incprob(unsigned int x, long *q, long *t);
+void incprob(unsigned int x, unsigned long *q, unsigned long *t);

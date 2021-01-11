@@ -1,0 +1,50 @@
+Armed with the function inplace_swap from Problem 2.10, you decide to write code that will
+reverse the elements of an array by swapping elements from positive ends of the array, working
+towards the middle.
+
+You arrive at the following function:
+
+void reverse_array(int a[], int cnt){
+     int first, last;
+     for (first = 0, last = cnt - 1; first <= last; first++, last--)
+     	 inplace_swap(&a[first], &a[last]);
+}
+
+When you apply your function to an array containing elements 1, 2, 3, and 4, you find
+the array now has, as expected, elements 4, 3, 2, 1. When you try it on an array with
+elements 1, 2, 3, 4, and 5 however, you are surprised to see that the array now has
+elements 5, 4, 0, 2, and 1. In fact, you discover that the code always work correctly
+on arrays of even length, but it sets the middle element to 0 whenever the array has odd
+length.
+
+A) For an array of odd length cnt = 2k + 1, what are the values of variables first and last
+   in the final iteration of function reserve_array?
+
+   The value of first is (2k + 1) / 2, which is the same for last.
+
+B) Why does this call to function inplace_swap set the array element to 0?
+   Because first and last refer to the same index, inplace_swaping gives the value a ^ a,
+   which is 0.
+
+C) What simple modification to the code for reverse_array would eliminate this problem?
+   The first <= last condition is changed to first < last, which prevents the middle value
+   from becoming 0.
+
+
+---------------------------------------------------------------------------------------------------
+
+
+The Problem illustrates a subtle and interesting feature of our inplace swap routine.
+
+A) Both first and last have value k, so we are attempting to swap the middle element with itself.
+
+B) In this case, arguments x and y to inplace_swap both point to the same location. When we
+   compute *x ^ *y, we get 0. We then store 0 as the middle element of the array, and the
+   subsequent steps keep setting this element to 0. We can see that our reasoning in Problem 2.10
+   implicitly assumed that x and y denote different locations.
+
+C) Simply replace the test in line 4 of reverse_array to be first < last, since there  is no
+   need to swap the middle element with itself.
+
+
+---------------------------------------------------------------------------------------------------

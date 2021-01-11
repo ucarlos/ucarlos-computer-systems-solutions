@@ -1,0 +1,15 @@
+Fill in the missing information in the following table:
+
+Fractional Value    Binary Expres.     Decimal Rep.
+1/8                 0.001              0.125
+3/4                 0.110              0.750
+25/16               1.1001             1.5625
+9/8                 1.001              1.125
+47/8                5.111              5.875
+51/16               3.0011             3.1875
+
+
+
+3 + 1/8 + 1/16
+3 + 3/16
+51/16

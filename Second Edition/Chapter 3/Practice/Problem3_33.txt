@@ -1,0 +1,61 @@
+Given the C function
+
+int proc(void){
+    int x, y;
+    scanf("%x, %x", &y, &x);
+    return x - y;
+}
+
+GCC generates the following assembly code:
+
+ 1   proc:
+ 2       pushl   %ebp  -- Store current frame pointer
+ 3       movl    %esp, %ebp -- Set %ebp as frame pointer
+ 4       subl    $40, %esp  -- Allocate 40 bytes 
+ 5       leal    -4(%ebp), %eax         -- %eax = &[%ebp - 4]
+ 6       movl    %eax, 8(%esp)          -- %esp + 8 = %eax
+ 7       leal    -8(%ebp), %eax         -- %eax = &[%ebp - 8]
+ 8       movl    %eax, 4(%esp)          -- %esp + 4 = %eax
+ 9       movl    $.LC0, (%esp) -- Pointer to string "%x %x"
+10       call    scanf
+
+    // Diagram stack frame at this point
+11       movl    -4(%ebp), %eax -- %eax = (%ebp - 4)
+12       subl    -8(%ebp), %eax -- %eax = %eax - (%ebp - 8)
+13       leave -- Set registers to prior state
+14       ret -- Return 
+
+-----------------------------------------------------------------------
+Assume that procedure proc starts executing with the following
+register values:
+
+Register        Value
+-------------------------------
+%esp            0x800040
+%ebp            0x800060
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+Suppose proc calls scanf (line 10), and that scanf reads values
+0x46 and 0x53 from the standard input. Assume that the string
+"%x %x" is stored at memory location 0x300070.
+
+A) What value does %ebp get set to on line 3?
+%ebp is set to the the contents of %esp, which is the stored
+value of the old frame pointer.
+
+B) What value does %esp get set to on line 4?
+%esp is set to %ebp - 40, which allocates 40 bytes for the
+(frame?).
+
+C) At what address are local variables x and y stored?
+They are stored in %ebp - 4 and %ebp - 8 respectively.
+Which would be 0x80005c and 0x800058.
+
+
+D) Draw a diagram of the stack frame for proc right after scanf
+   returns. Include as much information as you can about the
+   addresses and the contents of the stack frame elements.
+
+E) Indicate the regions of the stack frame that are not used
+   by proc.

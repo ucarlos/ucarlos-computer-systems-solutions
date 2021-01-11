@@ -1,0 +1,47 @@
+For the recursive factorial program
+
+long int rfact(long int x){
+     if (x <= 0)
+     	return 1;
+     else{
+	long int xm1 = x - 1;
+	return x * rfact(xm1);
+	 }
+}
+
+GCC generates the following code:
+
+    x86-64 implementation of recursive factorial function rfact
+    Argument x in %rdi
+
+1 rfact:
+2	pushq	%rbx -- Save contents of %ebx onto stack
+3 	movq 	%rdi, %rbx -- Save the argument in %rbx
+4 	movl 	$1, %eax -- Set return value to 1
+5 	testq 	%rdi, %rdi -- Test %rdi with itself
+6 	jle 	.L11 -- Branch to .L11 if less than or equal to 0.
+7 	leaq 	-1(%rdi), %rdi -- Compute x - 1 and store in %rdi
+8 	call 	rfact  -- Recursive call
+9 	imulq 	%rbx, %rax -- Multiply the contents of call in %rax
+10 	.L11:
+11 	popq	%rbx -- Pop contents of %rbx 
+12 	ret -- Return
+
+A. What value does the function store in %rbx? The copy of the argument x
+
+B. What are the purposes of the pushq (line 2) and popq (line 11) instructions?
+   To save the contents of the argument x onto the stack.
+
+C. Annotate the assembly code to describe the effect of each instruction.
+
+D. How does this function manage the stack frame differently from others we
+   have seen?
+
+The contents of %rbx are saved during a new recursive call, and then popped
+after the call returns. 
+
+-----------------------------------------------------------------------------------------
+D) Instead of explicitly decrementing and incrementing the stack pointer, the
+code can use pushq and popq to both modify the stack pointer and to save
+and restore register state.
+-----------------------------------------------------------------------------------------

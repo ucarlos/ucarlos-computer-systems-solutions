@@ -1,0 +1,10 @@
+Modify the assembly code shown for signed division so that it computes the
+unsigned quotient and reminder of numbers x and y and stores the results on
+the stack.
+
+
+movl 8(%ebp), %eax	--move x into last 32 bits at %eax
+movl $0, %edx	-- Clear High 32 bits
+divl 12(%edp)  -- Divide by y
+movl %eax, 4(%esp)	 -- Store x / y
+movl %edx, (%esp)	 -- Store x % y

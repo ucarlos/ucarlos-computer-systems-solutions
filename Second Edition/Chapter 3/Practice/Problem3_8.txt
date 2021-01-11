@@ -1,0 +1,23 @@
+Suppose we want to generate assembly code for the following C function:
+
+int shift_left2_rightn(int x, int n){
+    x <<= 2;
+    y >> n;
+    return x;
+}
+
+The code that follows is a portion of the assembly code that performs the actual
+shifts and leaves the final value in register %eax. Two key instructions have
+been omitted. Parameters x and n are stored at memory locations with offsets
+8 and 12 respectively, relative to the address in register %ebp.
+
+1)  movl 8(%eap), %eax	   	   Get x
+
+2)  sall 2, %eax  		   x <<= 2
+
+3)  movl 12(%ebp), %ecx		   Get n
+
+4)  sarl %ecx, %eax 		   x >>= n
+
+Fill in the missing instructions, following the annotations on the right. The
+right shift should be preformed arithmetically.

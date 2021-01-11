@@ -1,0 +1,51 @@
+Consider the following structure declaration:
+
+struct prob{
+       int *p;
+       struct {
+       	      int x;
+	      int y;
+       } s;
+       struct prob *next;
+};
+
+This declaration illustrates that one structure can be embedded within another,
+just as arrays can be embedded within structures, and arrays can be embedded
+within arrays.
+
+
+The following procedure (with some expressions omitted) operates on this
+structure:
+
+void sp_init(struct prob *sp){
+     sp->s.x  = __________;
+     sp->p    = __________;
+     sp->next = __________;
+}
+
+A) What are the offsets (in bytes) of the following fields:
+   p: 4 (0)
+   s.x: 4 (4)
+   s.y: 4 (8)
+   next: 4 (12) - 16
+
+
+B) How many bytes does the structure require? 16 bytes
+
+
+C) The compiler generates the following assembly code for the body of sp_init:
+   sp at %ebp + 8
+   movl	      8(%ebp), %eax -- %eax = *sp
+   movl	      8(%eax), %edx -- %edx = *sp + 8 = s.y
+   movl	      %edx, 4(%eax) -- sp->s.x = s.y
+   leal	      4(%eax), %edx -- %edx = &(*sp + 4)
+   movl	      %edx, (%eax)  -- *sp = &(*sp + 4)
+   movl	      %eax, 12(%eax)-- sp->next = sp->p
+
+
+On the basis of this information, fill in the missing expressions in the code
+for sp_init.
+
+sp->s.x = sp->s.y;
+sp->p = &(sp->s.x);
+sp->next = sp;

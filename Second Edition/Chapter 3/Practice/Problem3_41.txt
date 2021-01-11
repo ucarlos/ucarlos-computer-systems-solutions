@@ -1,0 +1,82 @@
+-------------------------------------------------------------------------
+
+ATTENTION:
+If you are trying to align a structure with its members,
+find the largest word(or type size). You have to align with
+this value, and the total byte size must divide evenly with
+this value.
+
+-------------------------------------------------------------------------
+
+For each of the following structure declarations, determine the
+offset of each field, the total size of the structure, and its
+alignment requirement under Linux/IA32.
+
+A) struct P1 {int i; char c; int j; char d;};
+   int i -- Offset 0
+   char c  -- Offset 4 (+ 3 bytes
+   int j -- Offset 8
+   char d -- Offset 12
+
+   Total size = 16 bytes
+
+   0    4 5   8    12 13   16    <-- Number of bytes offset from struct pointer
+      i  c pp   j    d  ppp      <-- p means padding or aligning with x, and the rest are the variable names
+
+   The alignment requirement involves ints, so the structure has to be
+   aligned for int i (offset 0) and int j (offset 8). Although the total size of the arguments is 13 bytes,
+   we have to add 3 more bytes to make the structure align.(For arrays)
+
+B) struct P2 {int i; char c; char d; int j;};
+  
+   int i -- Offset 0
+   char c -- Offset 4
+   char c -- Offset 5 ( + 2 bytes for offsetting)
+   int j -- Offset 8
+
+   0    4 5 6  8    12
+      i  c c pp   j
+      
+   Total size = 12 bytes
+
+   Alignment requirement: 4 bytes to align i (Offset 0) and j (Offset 8)
+
+C) struct P3 {short v[3]; char c[3];}
+   short v[0] -- Offset 0
+   short v[1] -- Offset 2
+   short v[2] -- Offset 4
+   char  c[0] -- Offset 6
+   char  c[1] -- Offset 7
+   char  c[2] -- Offset 8
+
+   0  2  4  6 7 8 9 10
+    v0 v1 v2 c c c p
+
+   Total size = 9 bytes + 1 byte padding = 10 bytes
+   Alignment requirement : 2 bytes to align short v(Offset 0, 2, 4).
+
+D) struct P4 {short v[3]; char *c[3];}
+   short v[0] -- Offset 0
+   short v[1] -- Offset 2
+   short v[2] -- Offset 4
+   Offset of 2 for char *
+   char *c[0] -- Offset 8
+   char *c[1] -- Offset 12
+   char *c[2] -- Offset 16
+
+   0  2  4    8    12    16    20
+    v0 v1 v2pp  *c0   *c1   *c2
+
+    Total size = 20 bytes
+    Alignment requirement : Aligned by 4 in order to offset char * correctly(size is 4 bytes)
+
+E) struct P5 {struct P1 a[2]; struct P2 *p};
+
+   P1 has a total size of 13 bytes, but because it is an array, it must be aligned to 4 bytes
+   Therefore, each member is 16 bytes.
+
+   0                16                32    36
+         P1 a[0]           P1 a[1]       *p
+
+         Total size = 36 bytes
+         Alignment requirement: Alignment of 4 bytes

@@ -1,0 +1,25 @@
+Each of the following lines of code generates an error message
+when we invoke the assembler. Explain what is wrong with each
+line.
+
+A) movb $0xf, (%b1)
+The only registers that can be used as address registers are long word ones, so we cannot use %b1.
+
+B) movl %ax, (%esp)
+Mismatch between instruction suffix and register ID
+
+C) movw (%eax), 4(%esp)
+Cannot have both source and destination be memory references
+
+D) movb %ah, %sh
+Register %sh does not exist in x86.
+
+E) movl %eax, $0x123
+Cannot have a constant as a destination
+
+
+F) movl %eax, %dx
+%dx cannot store the contents of %eax as it is a 2 byte register.
+
+G) movb %si, 8(%ebp)
+Mismatch between instruction suffix and register ID.

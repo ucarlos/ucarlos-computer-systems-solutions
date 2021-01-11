@@ -1,0 +1,27 @@
+In the following C function, we have left the definition of
+operation OP incomplete:
+
+#define OP ____________;
+
+int arith(int x){
+    return x OP 4;
+}
+
+When compiled, GCC generates the following assembly code:
+// Register: x in %edx
+   leal      3(%edx), %eax -- %eax = 3 + x
+   testl     %edx, %edx   --- Test %edx
+   cmovns    %edx, %eax  -- If %edx >= 0, %eax = %edx
+   sarl      $2, %eax  -- %eax >> 2
+
+
+A) What operation is OP?
+   x < 0 ? (x + 3) / 4 : x / 4 ;
+B) Annotate the code to explain how it works.
+See above:
+-----------------------------------------------------------------------
+A) The operator is '/'. We see this is an example of dividing by
+a power of 2 by right shifting (see Section 2.3.7). Before
+shifting by k = 2, we must add a bias of 2^k - 1 = 3 when the
+dividend is negative.
+-----------------------------------------------------------------------

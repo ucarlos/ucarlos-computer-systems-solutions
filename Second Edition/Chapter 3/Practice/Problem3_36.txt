@@ -1,0 +1,15 @@
+Suppose the address of short integer array S and integer index
+i are stored in registers %eax and %ecx, respectively. For each
+of the following expressions, give its type, a formula for its
+value, and an assembly code implementation. The result should
+be stored in register %eax if it is a pointer and register
+element %ax if it is a short integer.
+
+
+Expression       Type          Value             Assembly code
+----------------------------------------------------------------------------------------------------------------------------------------------------
+S + 1              short *     X_S + 1            leal 1(%eax), %eax
+S[3]               short       M[X_S+6]           movw 6(%eax), %ax
+&S[i]              short *     X_S + 2*i          leal (%eax, %ecx, 2), %eax
+S[4 * i + 1]       short       M[X_S + 4*i + 1]   movw 2(%eax, %ecx, 8), %ax  
+S + i - 5          short *     X_S + i - 5        leal -10(%eax, %ecx), %eax

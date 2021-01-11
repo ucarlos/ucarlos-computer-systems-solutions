@@ -1,0 +1,22 @@
+As mentioned in Problem 2.6, the integer 3,510,593 has hexadcimal representation
+0x00359141, while the single-precision, floating-point number 3510593.0 has
+hexadecimal representation 0x4a564504. Derive this floating-point representation
+and explain the correlation between the bits of the integer and floating-point
+representations.
+
+3510493.0
+
+so in fractioal representation, this number is
+      1101011001000011011101
+      and then 1.101011001000011011101 x 2^21
+      s = 0,
+      E = e - Bias, so then 21 = e - Bias, e = 21 + Bias == 21 + (2^7 -1) == 148
+
+The floating point representation is then
+0   	     10010100		  10101100100001101110100
+Sign	     Exponent		  Significand(Mantissa)
+
+or 01001010010101100100001101110100
+
+
+3510593 to Binary is 00000000001101011001000101000001

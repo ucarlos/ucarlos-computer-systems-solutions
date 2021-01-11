@@ -1,0 +1,65 @@
+The function intlen, along with the functions len and iptoa, provides a very
+convoluted way of computing the number of decimal digits required to represent
+aninteger.We will use this as a way to study some aspects of the gcc stack
+protector facility.
+int len(char *s) {
+    return strlen(s);
+}
+
+void iptoa(char *s, int *p)
+{
+	int val = *p;
+	sprintf(s, "%d", val);
+}
+
+int intlen(int x) {
+    int v;
+    char buf[12];
+    v = x;
+    iptoa(buf, &v);
+    return len(buf);
+}
+The following show portions of the code for intlen, compiled both with and
+without stack protector:
+
+Without protector :
+1 subl 		  $36, %esp
+2 movl 		  8(%ebp), %eax
+3 movl 		  %eax, -8(%ebp)
+4 leal 		  -8(%ebp), %eax
+5 movl		  %eax, 4(%esp)
+6 leal 		  -20(%ebp), %ebx
+7 movl 		  %ebx, (%esp)
+8 call 		  iptoa
+
+With protector:
+1   subl	$52, %esp
+2   movl 	%gs:20, %eax
+3   movl 	%eax, -8(%ebp)
+4   xorl	%eax, %eax
+5   movl 	8(%ebp), %eax
+6   movl 	%eax, -24(%ebp)
+7   leal 	-24(%ebp), %eax
+8   movl 	%eax, 4(%esp)
+9   leal 	-20(%ebp), %ebx
+10  movl 	%ebx, (%esp)
+11  call 	iptoa
+
+A. For both versions: What are the positions in the stack frame for buf, v, and
+(when present) the canary value?
+      Without protection:
+       	      v = %ebp - 8
+       	      buf - %ebp - 20
+      	      No canary value
+
+      With protection:
+      	   v = %ebp - 24
+	   buf = %ebp - 20
+	   Canary value = %ebp - 8
+      
+
+
+B. How would the rearranged ordering of the local variables in the protected
+code provide greater security against a buffer overrun attack?
+     A rearranged ordering would prevent any attacker from anticipating the
+     stack addresses of the variables.

@@ -1,0 +1,37 @@
+The following C code
+
+int test(data_t a){
+    return a TEST 0;
+}
+
+shows a general comparison between argument a and 0, where we can set the data
+type of the argument by declaring data_t with a typedef, and the nature of the
+comparison by declaring TEST with a #define declaration. For each of the
+following instruction sequences, determine which data types data_t and which
+comparisons TEST could cause the compiler to generate this code. (There can be
+multiple correct answers; list all correct ones.)
+
+-----------------------------------------------------------------------------------------
+A) testl	%eax, %eax
+   setne	%al
+-----------------------------------------------------------------------------------------
+The data type is a 32bit unsigned int, int, or long, and this is testing whether
+%eax is not equal to itself.
+-----------------------------------------------------------------------------------------
+
+B) testw	%ax, %ax
+   sete		%al
+-----------------------------------------------------------------------------------------
+This data type is a 16-bit short and is being tested for equality. 
+-----------------------------------------------------------------------------------------
+C) testb	%al, %al
+   setg		%al
+-----------------------------------------------------------------------------------------
+This data type is a unsigned char and this is testing whether %al is greater
+than itself.
+-----------------------------------------------------------------------------------------
+D) testw	%ax, %ax
+   seta		%al
+-----------------------------------------------------------------------------------------
+This data type is a unsigned short int. The test involves whether %al is above itself.
+-----------------------------------------------------------------------------------------

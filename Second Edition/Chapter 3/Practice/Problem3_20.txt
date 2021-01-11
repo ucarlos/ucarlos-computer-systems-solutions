@@ -1,0 +1,57 @@
+READ THIS FIRST |
+________________|_______________________________________________________________
+As with the code of Problem 3.16, two conditional branches are required to
+implement the && operation.
+
+If there's a testl statement with a jle statement afterwords, the jle might
+be triggered if the test1 statement creates a 0 flag. (i.e is zero)
+----------------------------------------------------------------------------------------
+For the C code
+
+int dw_loop(int x, int y, int n){
+    do {
+       c += n;
+       y *= n;
+       n--;
+       } while ((n > 0) && (y < n));
+    return x;
+}
+
+GCC generates the following assembly code:
+x at %ebp + 8, y at %ebp + 12, n at %ebp + 16
+
+  movl	  8(%ebp), %eax  -- x = %ebp + 8
+  movl	  12(%ebp), %ecx -- y = %ebp + 12
+  movl	  16(%ebp), %edx -- n = %ebp + 16
+.L2 -- Do while loop
+  addl    %edx, %eax  -- x += n
+  imull	  %edx, %ecx  -- y *= n
+  subl	  $1, %edx    -- n -= 1
+  testl	  %edx, %edx  -- Test n with itself
+  jle	  .L5	      -- Branch if n is less than or equal to zero
+  cmpl	  %edx, %ecx  -- Compare n and y
+  jl	  .L2         -- Continue loop if n < y.
+
+.L5 -- Done:
+
+
+A) Make a table of register usage, similar to the one shown in Figure 3.14(b).
+   | Register | Variable | Initially |
+     %eax          x          x
+     %ecx	   y	      y
+     %edx	   n	      n
+     
+B) Identify test-expr and body-statement in the C code, and the corresponding
+   lines in the assembly code.
+
+   In C, the test-expression is ((n > 0) && (y < n)) and the body-statement
+   contains all the statements in the do-while loop.
+   In Assembly, the test-expressions are both testl %edx, %edx and
+   %edx, %ecx and the jump statements associated with each test. The body
+   statements are the lines preceding them, but after the .L2 Label.
+
+C) Add annotations to the assembly code describing the operation of the
+   program, similar to those shown in Figure 3.14(b). 
+
+   Shown above.
+

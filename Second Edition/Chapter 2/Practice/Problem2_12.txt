@@ -1,0 +1,14 @@
+Write C expressions, in terms of variable x, for the following values. Your code should work
+for any word size >= 8. For reference, we show the result of evaluating the expressions for
+x = 0x87654321, with w = 32.
+
+A) The least significant byte of x, with all other bits set to 0. [0x00000021]
+   For w  = 32, we have x &= 000000FF
+
+B) At but the least significant of x complemented, with the least significant byte
+   left unchanged. [0x789ABC21]
+   	For w = 32, we have x = (~x) ^ 0x000000FF
+
+C) The least significant byte set to all ones, and all other bytes of x left unchanged [0x876543FF]
+
+   For w = 32, we have x |= 000000FF

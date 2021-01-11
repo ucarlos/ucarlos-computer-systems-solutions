@@ -1,0 +1,57 @@
+For each of the following structure declarations, determine the offset of each
+field, the total size of the structure, and its alignment requirement under
+x86-64.
+
+A) struct P1 { int i; char c; long j; char d;};
+   int i = Offset %rsp
+   char c = Offset %rsp + 4
+   3 byte padding for alignment
+   long j = Offset %rsp + 8
+   char d = Offset %rsp + 16
+   7 byte padding for alignment,
+
+so in total 24 bytes for the alignment requirement of 8 bytes.
+
+
+B) struct P2 { long i; char c; char d; int j;};
+   long i = Offset %rsp
+   char c = Offset %rsp + 8
+   char d = Offset %rsp + 9
+   2 byte padding for alignment
+   int j = Offset %rsp + 12
+
+So in total, 16 bytes for the alignment requirement of 8 bytes.
+
+
+C) struct P3 { short w[3]; char c[3];};
+   short w[0] - %rsp
+   short w[1] - %rsp + 2
+   short w[2] - %rsp + 4
+   char  c[0] - %rsp + 6
+   char  c[1] - %rsp + 7
+   char  c[2] - %rsp + 8
+   1 byte padding for alignment
+
+So in total, 10 bytes for the alignment requirement of 2 bytes.
+D) struct P4 { short w[3]; char *c[3];};
+
+   short w[0] - %rsp
+   short w[1] - %rsp + 2
+   short w[2] - %rsp + 4
+   2 byte padding for alignment
+   char *c[0] - %rsp + 8
+   char *c[1] - %rsp + 16
+   char *c[2] - %rsp + 24
+
+So in total, 32 bytes for the alignment requirement of 8 bytes.
+
+E) struct P5 {struct P1 a[2]; struct P2 *p;};
+
+   struct P1 a[0] - %rsp
+   struct P1 a[1] - %rsp + 24
+   struct P2 *p - %rsp + 48
+
+
+So in total, 56 bytes for the alignment requirement of 8 bytes.
+
+

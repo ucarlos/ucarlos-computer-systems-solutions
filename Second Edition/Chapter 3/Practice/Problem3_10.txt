@@ -1,0 +1,23 @@
+It is common to find assembly code lines of the form
+
+xorl  %edx, %edx
+
+in code that was generated from C where no exclusive-or operations were
+present.
+
+A) Explain the effect of this particular exclusive-or instruction and what
+useful operation it implements.
+It clears a register by setting every bit to zero.
+
+
+B) What would be the more straightforward way to express this operation in
+assembly code?
+
+Moving a constant zero to a register such as:
+movl $0, %edx
+
+
+
+C) Compare the number of bytes to encode these two different implementations of
+the same operation.
+Apparently, assembling and disassembling this code the xorl commands requires 2 bytes while using movl requires 5.

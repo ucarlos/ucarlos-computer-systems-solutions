@@ -1,0 +1,20 @@
+The following code fragment occurs often in the compiled version of library
+routines:
+
+	call next
+       next:
+        popl %eax
+
+
+A) To what value does register %eax get set?
+The address of next is stored in %eax
+
+
+B) Explain why there is no matching ret instruction to this call.
+Returning from next will place the program counter at next again.
+
+C) What useful purpose does this code fragment serve?
+This can store the address of a procedure into a register.
+
+
+	

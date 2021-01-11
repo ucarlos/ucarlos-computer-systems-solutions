@@ -1,0 +1,39 @@
+For the C program
+
+long int local_array(int i){
+     long int a[4] = {2L, 3L, 5L, 7L};
+     int idx = i & 3;
+     return a[idx];
+}
+
+GCC generates the following code:
+
+x86-64 implementation of local_aray
+       Argument i in %edi
+
+1      local_array:
+         movq	$2, -40(%rsp) -- a[0] = 2
+	 movq   $3, -32(%rsp) -- a[1] = 3
+	 movq	$5, -24(%rsp) -- a[2] = 5
+	 movq	$7, -16(%rsp) -- a[3] = 7
+	 andl	$3, %edi -- And %edi with 3
+	 movq	-40(%rsp, %rdi, 8), %rax -- Move the contents of a[idx] to %rax
+	 ret -- return
+
+A) Draw a diagram indicating the stack locations used by this function and their
+offsets relative to the stack pointer.
+	|	    | %rsp 0
+	|	    | 8
+	|	    | 16
+	|   a[3]    | 24
+	|   a[2]    | 32
+	|   a[1]    | 40
+	|   a[0]    | 48
+
+
+B) Annotate the assembly code to describe the effect of each instruction.
+
+C) What interesting feature does this example illustrate about the x86-64 stack
+   discipline? You were able to go outside the bounds of the stack pointer
+   (by going above it) and store the value there.
+   

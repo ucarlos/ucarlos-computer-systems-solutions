@@ -1,0 +1,42 @@
+Assume variables x, f, and d are of type int, float, and double, respectively.
+Their values are arbitary, except that neither f nor d equals +INFINITY,
+-INFINITY, or NaN. For each of the following C expressions, either argue that
+it will always be true (i.e. evaluate to 1) or give a value for the variables
+such that it is not true (i.e. evaluates to 0).
+
+A) x == (int)(double) x
+   Casting x to double will retain its value, and recasting x back to int
+   will keep the same value. True.
+
+B) x == (int)(float)  x
+   Casting x to float will cause the number to be rounded according to 32-bit
+   precision, and casting it back to int will cause will make the expression
+   false.
+
+C) d == (double)(float)
+   Casting d to float can cause large numbers of type double to overflow and be
+   represented as negative or positive infinity. False.
+
+D) f == (float)(double) f
+   Casting f to double will preserve the value of f, and recasting it back to
+   float will not change its value. True.
+
+
+E) f == - (-f)
+   Applying -f will just change the exponential value, and applying - again
+   will restore the value back to normal.
+
+F) 1.0 / 2 == 1 / 2.0
+   The value will be the same since either the numerator or denominator is
+   converted into a floating-point number. True.
+
+G) d * d  >= 0.0
+   True. If a sufficiently large number is squared, it will be represented as
+   positive infinity which >= 0.0
+
+
+H) (f + d) - f == d
+   No, for example when f is 1.0e20 and d is 1.0, the expression f + d will
+   be rounded to 1.0e20, and so the expression on the left-hand side will
+   evaluate to 0.0, while the right-hand side will be 1.0.
+   

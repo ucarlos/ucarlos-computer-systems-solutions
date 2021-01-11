@@ -1,0 +1,27 @@
+In several of the following problems, we will artifically restrict what
+programming constructs you can use to help you gain a better understanding
+of the bit-level, logic and arithmetic operations of C. In answering these
+problems, your code must follow these rules:
+
+** Assumptions
+   Integers are represented in two's-complement form.
+   Right Shifts of signed data are preformed arithmetically.
+   Data type int is w bits long. For some of the problems, you will be
+   given a specific value for w, but otherwise your code should work as
+   long as w is a multiple of 8. You can use the expression 
+   sizeof(int) << 3 to compute w.
+
+** Forbidden
+   *Conditionals (if or ? :), loops, switch statements, function calls, and
+   macro ivocations.
+   *Division, modulus, and muliplication
+   *Relative comparision operators (<, >, <=, and >=)
+   *Casting, either explict or implict.
+
+** Allowed Operations
+   *All bit-level and logic operations
+   *Left and right shifts, but only with shift amounds between 0 and 
+   w - 1.
+   *Addition and subtraction.
+   *Equality and inquality tests
+   *Integer constants INT_MAX and INT_MIN

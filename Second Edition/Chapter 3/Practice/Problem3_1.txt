@@ -1,0 +1,27 @@
+Assume the following values are stored at the indicated memory
+addresses and registers:
+
+Address   Value     
+0x100     0xff          
+0x104     0xab
+0x108     0x13
+0x10c     0x11
+
+Register  Value
+%eax      0x100
+%ecx      0x1
+%edx      0x3
+
+Fill in the following table showing the values for the
+indicated operands:
+
+Operand                 Value  
+%eax                   	0x100 
+0x104                   0xab
+$0x108                  0x108
+(%eax)                  0xff
+4(%eax)                 0xab
+9(%eax, %edx)           0x11
+260(%ecx, %edx)         0x13
+0xfc(,%ecx, 4)          0xff 
+(%eax, %edx, 4)         0x11

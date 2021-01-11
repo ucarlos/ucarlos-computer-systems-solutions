@@ -1,0 +1,46 @@
+Consider the following source code, where M and N are constants
+declared with #define:
+
+int mat1[M][N];
+int mat2[N][M];
+
+int sum_element(int i, int j){
+    return mat1[i][j] + mat2[i][j];
+}
+
+In compiling this program, GCC generates the following assembly
+code:
+    i at %ebp + 8, j at %ebp + 12
+    movl      8(%ebp), %ecx          -- %ecx = i
+    movl      12(%ebp), %edx         -- %edx = j
+    leal      0(, %ecx, 8), %eax     -- %eax = &M[8 * i + 0] = &M[8 * i] 
+    subl      %ecx, %eax             -- %eax = %eax - i = M[7 * i] 
+    addl      %edx, %eax             -- %eax = %eax + j = M[7 * i + j] -- N = 7
+    leal      (%edx, %edx, 4), %edx  -- %edx = M[5 * j] -- M = 5
+    addl      %ecx, %edx             -- %edx = M[5 * j + i]
+    movl      matl(, %eax, 4), %eax  -- %eax = M[4 * %eax + mat1]  == M[ 4(7 * i + j) + mat1]
+    addl      mat2(, %edx, 4), %eax  -- %eax = %eax + M[4 * j + mat2]
+
+
+Use your reverse engineering skills to determine the values of
+M and N based on this assembly code.
+
+int A[5][4]
+= T * C * i + T * j
+= T(C * i + j)
+
+
+M = 5, N = 7.
+-----------------------------------------------------------------------
+This problem requires you to work through the scaling
+operations to determine the address computations, and
+to apply Equation 3.1 for row-major indexing. The ﬁrst step
+is to annotate the assembly code to determine how the address
+references are computed.
+
+We can see that the reference to matrix mat1 is at byte
+offset 4(7i + j ), while the reference to matrix mat2 is at
+byte offset 4(5j + i). From this, we can determine that mat1
+has 7 columns, while mat2 has 5, giving M = 5 and N = .7
+
+-----------------------------------------------------------------------

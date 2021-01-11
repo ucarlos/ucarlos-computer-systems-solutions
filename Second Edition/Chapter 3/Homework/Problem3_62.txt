@@ -1,0 +1,35 @@
+The following code transposes the elements of an M × M array, where M is a
+constant defined by #define:
+
+void transpose(Marray_t A) {
+     int i, j;
+     for (i = 0; i < M; i++)
+     	 for (j = 0; j < i; j++) {
+	     int t = A[i][j];
+	     A[i][j] = A[j][i];
+	     A[j][i] = t;
+	 }
+}
+
+When compiled with optimization level -O2, gcc generates the following code for
+the inner loop of the function:
+
+1 .L3:
+2 movl		(%ebx), %eax		-- %eax = *(%ebx)
+3 movl 		(%esi,%ecx,4), %edx	-- %edx = *(%esi + 4 * %ecx)
+4 movl 		%eax, (%esi,%ecx,4)	-- *(%esi + 4 * %ecx) = %eax
+5 addl 		$1, %ecx		-- %ecx = %ecx + 1
+6 movl		%edx, (%ebx)		-- *%ebx = *(%esi + 4 * %ecx)
+7 addl 		$52, %ebx		-- %ebx = %ebx + 52
+8 cmpl 		%edi, %ecx		-- compare %edi with %ecx
+9 jl .L3	      			-- If %edi < %ecx , continue loop
+
+%edi is then j, %ecx = i, %ebx = Aptr, %eax = t
+
+A. What is the value of M? 13
+
+B. What registers hold program values i and j? %ecx and %edi
+
+C. Write a C code version of transpose that makes use of the optimizations
+that occur in this loop. Use the parameter M in your code rather than numeric
+constants.

@@ -1,0 +1,3 @@
+For a run of 1s starting at bit position n down to bit position m (n >= m),
+we saw that we can generate two forms of code, A, and B. How should the
+compiler decide which form to use?

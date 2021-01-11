@@ -1,0 +1,19 @@
+There are some differences between IA32 and x86-64 that have to addressed.
+The following pictures should help:
+
+1) cmp instructions are different in x86-64 than in IA32.
+
+in IA32, the instructions
+cmpl $1, %edx
+jle .L1
+
+would state that 1 and %edx are being compared, and if 1 <= %edx, there is a 
+branch to .L1
+
+in x86-64, the instructions would be this:
+cmpq $1, %rdx
+jle .L1
+
+which would compare 1 and %rdx, but would branch WHEN %rdx <= 1.
+
+2)

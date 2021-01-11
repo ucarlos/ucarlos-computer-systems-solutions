@@ -1,0 +1,71 @@
+We are running programs on a machine where values of type int
+are 32 bits. They are represented in two's complement, and they
+are right shifted arithmetically. Values of type unsigned are
+also 32 bits.
+
+We generate arbitrary values x and y, and convert them to
+unsigned values as follows:
+
+/* Create some arbitrary values */
+int x = random();
+int y = random();
+
+/* Convert to unsigned */
+unsigned ux = (unsigned) x;
+unsigned uy = (unsigned) y;
+
+For each of the following C expressions, you are to indicate
+whether or not the expression always yields 1. If it always
+yields 1, describe the underlying mathematical principles.
+Otherwise, give an example of arguments that make it yield 0.
+
+A) (x < y) == (-x > -y)
+I suppose the only conditions where this does not apply involve
+x being INT_MIN and y being some integer greater than INT_MIN.
+In that case, we have INT_MIN < y, which is true. However, the
+RHS shows (-INT_MIN) > -y. Due to the 2-complement system, the only attainable integers are in the range -2^31 <= x < 2^31 or
+within [INT_MIN, (-INT_MIN) - 1].
+
+B) ((x + y) << 4) + (y - x) == 17 * y + 15 * x
+We know for any two integers x and y,
+((x + y) << 4) is the same as 16 * (x + y), which follows the
+distributive property(i.e 16(x + y) == 16x + 16y).
+
+
+C) (~x + ~y + 1) == ~(x + y)
+I want to see if this holds, so let w = 5, and let x be 4 and 5
+respectively.
+
+4: 00100 --> 11011 --> 11100
+5: 00101 --> 11010 --> 11011
+
+so then
+11011
+11010
+------
+10101
+so the value is 10101 + 1 == 10110 --> 01001 --> 01010 == 10.
+
+On the right hand side we have:
+00100
+00101
+-----
+01001
+so then ~(01001) == 10110, which is the same as the LHS.
+
+I suppose that because the numbers have been negated before
+being added, it requires an extra 1 to count for a change
+from positive to negative, or to negative to positive.
+
+D) (ux - uy) == ~(unsigned)(y - x)
+
+At this point, I realize that that an unsigned integer will
+always be positive, so any negation of the RHS will produce the same value. using w = 4, ux = 2, uy = 3, we have on the LHS
+2 - 3 == 2^4 - 2 == 14.
+On the RHS, we have ~(2 - 3) == ~(unsigned)(2 - 3). The unsigned casts it to 14, and then negates the value. This of course is wrong.
+
+E) ((x >> 2) << 2) <= x
+I suppose that is accounts to (x * 2^n) / (2 ^n) === x * 1 <= x.
+
+
+

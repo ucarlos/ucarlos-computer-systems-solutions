@@ -1,0 +1,62 @@
+For the structure declartion
+
+struct{
+    char        *a; -- Offset 0
+    short        b; -- Offset 4
+    double       c; 
+    char         d;
+    float        e;
+    char         f;
+    long long    g;
+    void         *h;
+
+} foo;
+
+-------------------------------------------------------------------
+
+suppose it was compiled on a Windows machine, where each
+primitive data type of K bytes must have an offset that is a
+multiple of K.
+
+-------------------------------------------------------------------
+
+A) What are the byte offsets of all the fields in the structure?
+   *a -- Offset 0
+    b -- Offset 4
+      -- Pad 2 bytes 
+    c -- Offset 8
+    d -- Offset 16
+      -- Pad 3 bytes (20 - 17)
+    e -- Offset 20
+    f -- Offset 24
+      -- Pad 7 bytes (32 - 25)
+    g -- Offset 32
+    *h -- Offset 40
+       -- Pad 4 bytes (48 - 44)
+
+B) What is the total size of the structure? 48 bytes 
+
+
+C) Rearrange the fields of the structure to minimize wasted
+   space, and then show the byte offsets and total size for the
+   rearranged structure.
+
+struct{
+      double	c;  -- Offset 0
+      long long g;  -- Offset 8
+      float     e;  -- Offset 16
+      void     *h;  -- Offset 20
+      char     *a;  -- Offset 24
+      short     b;  -- Offset 28
+      char      d;  -- Offset 30
+      char      f;  -- Offset 31
+}
+
+Total size : 32 bytes
+
+------------------------------------------------------------------------------------------
+
+B) The structure is a total of 48 bytes long. The end of the structure must be
+padded by 4 bytes to satisfy the 8-byte alignment requirement.
+
+------------------------------------------------------------------------------------------

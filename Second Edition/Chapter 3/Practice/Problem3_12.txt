@@ -1,0 +1,41 @@
+Consider the following C function prototype, where num_t is a data type
+declared using typedef:
+
+void store_prod(num_t *dest, unsigned x, num_t y){
+     *dest = x * y;
+}
+
+gcc geenrates the following assembly code implementing the body of the
+computation:
+
+//	dest at %ebp + 8, x at %ebp + 12, and y at %ebp + 16
+
+1	movl 	12(%ebp), %eax
+2	movl 	20(%ebp), %ecx
+3	imull 	%eax, %ecx
+4	mull 	16(%ebp)
+5	leal 	(%ecx, %edx), %edx
+6	movl	8(%ebp), %ecx
+7	movl	%eax, (%ecx)
+8	movl	%edx, 4(%ecx)
+
+
+Observe that this code requires two memory reads to fetch argument y
+(lines 2 and 4), two multiples (line 3 and 4), and two memory writes to
+store the result (lines 7 and 8).
+
+A) What data type is num_t? num_t has to be a 64-bit integer, so it must be
+an unsigned long long.
+
+
+B) Describe the algorithm used to compute the product and argue that it is
+correct.
+
+Take the higher 32 bits of y and store them in a register A
+Multiply register A by x and store the result in register A.
+Multiply x by the lower 32 bits of y and store the result in %eax
+and remainder in %edx.
+
+I suppose it's correct since you are really just storing the values of the
+lower half into there.
+

@@ -1,0 +1,24 @@
+For each of the following lines of assembly language, determine
+the appropriate instruction suffix based on the operands.
+(For example, mov can be rewritten as movb, movw, or movl.)
+
+1) mov %eax, (%esp)
+   movl
+
+2) mov (%eax), %dx
+   movw
+
+3) mov $0xff, %bl
+   movb
+
+4) mov (%esp, %edx, 4), %dh
+   movb
+
+5) push $0xff
+   pushl
+
+6) mov %dx, (%eax)
+   movb
+
+7) pop %edi
+   popl

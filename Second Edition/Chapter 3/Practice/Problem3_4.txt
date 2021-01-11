@@ -1,0 +1,33 @@
+Assume variables v and p declared with types
+
+src_t v;
+dest_t *p;
+
+where src_t and dest_t are data types declared with typedef.
+We wish to use the appropriate data movement instruction to
+implement the operation
+*p = (dest_t) v;
+
+where v is stored in the appropriately named portion of register
+%eax (i.e. %eax, %ax, or %al), while pointer p is stored in
+register %edx.
+
+For the following combinations of src_t and dest_t, write a line
+of assembly code that does the appropriate transfer. Recall that
+when performing a cast that involves both a size change and a
+change of "signedness" in C, the operation should change the
+signedness first. (Section 2.26)
+
+-----------------------------------------------------------------------
+src_t      |      dest_t       |    Instruction
+-----------------------------------------------------------------------
+int               int               movl %eax, (%edx)
+char              int               movsbl %al, (%edx)
+char              unsigned          movzbl %al, (%edx)
+unsigned char     int               movzbl %al, (%edx)
+int               char              movb %al, (%edx)
+                                    
+unsigned          unsigned char     movb %al, (%edx)
+unsigned          int               mov %eax, (%edx)
+
+-----------------------------------------------------------------------
